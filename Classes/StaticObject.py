@@ -7,13 +7,13 @@ class StaticObject(sprite.Sprite):
         sprite.Sprite.__init__(self)
         self.image = load_image(picture, alpha_channel=True)
         if height:
+            self.type = "touchable"
             self.rect = Rect(x, y, self.image.get_rect().width, height)
             self.area = Rect((x + 10), (y + 10), (self.image.get_rect().width + 10), (height + 10))
         else:
-            self.rect = False
-            self.area = Rect((x + 10), (y + 10), (self.image.get_rect().width + 10),
-                             (self.image.get_rect().height + 10))
-            self.pos = (x, y)
+            self.type = "untouchable"
+            self.rect = self.image.get_rect()
+            self.area = Rect((x + 10), (y + 10), (self.rect + 10), (self.rect.height + 10))
 
     def update(self, dt):
         pass
@@ -22,8 +22,8 @@ class StaticObject(sprite.Sprite):
         pass
 
     def render(self, screen):
-        if self.rect:
+        if self.type == "touchable":
             y = self.rect.y - self.image.get_rect().height + self.rect.height
             screen.blit(self.image, (self.rect.x, y))
         else:
-            screen.blit(self.image, self.pos)
+            screen.blit(self.image, (self.rect.x, self.rect.y))

@@ -97,6 +97,7 @@ while True:
         f = open(open_dialog.value)
         map = json.loads(f.read())
         objs, back, start_pos = map_loader(map, obj_descr)
+        render_list = objs
         f.close()
 
     pygame.display.update()

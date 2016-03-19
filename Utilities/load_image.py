@@ -1,7 +1,7 @@
 from pygame import *
 import os
 
-init()
+# init()
 
 
 def load_image(names, path='Pictures', alpha_channel=False):

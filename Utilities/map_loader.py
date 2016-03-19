@@ -23,7 +23,7 @@ def map_loader(json_map, objects_descr):
             # x = y = 0
             # image = dic["image"]
             # back = StaticObject(x, y, image)
-            back = load_image(dic["image"])
+            back = {"surface": load_image(dic["image"]), "address": dic["image"]}
 
         if dic["type"][0] == "object":
             x = dic['pos'][0]
@@ -37,7 +37,8 @@ def map_loader(json_map, objects_descr):
                         height = False
 
             new_obj = StaticObject(x, y, image, height=height)
-            obj_dict = {"object": new_obj, "function": dic["function"]}
+            obj_dict = {"object": new_obj, "function": dic["function"],
+                        "index": dic["index"], "name": dic["name"]}
 
             obj_list.append(obj_dict)
 
