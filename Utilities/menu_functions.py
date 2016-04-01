@@ -22,5 +22,9 @@ def stub():
     """
     Функция-заглушка
     """
+    print("!!!")
     pass
 
+
+def close_brush(**kwargs):
+    print(kwargs)

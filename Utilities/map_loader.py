@@ -31,7 +31,7 @@ def map_loader(json_map, objects_descr):
             for obj in objects_descr:
                 if dic['name'] == obj['name']:
                     image = obj['image'][0]
-                    if dic['type'][1] == 'touchable_object':
+                    if dic['type'][1] == 'touchable':
                         height = obj['height']
                     else:
                         height = False
