@@ -1,21 +1,25 @@
 [
   {
     "name" : "front_locker",
-    "image" : "lockerx2.png",
+    "image" : ["lockerx2.png"],
     "height" : 24
   },
   {
     "name": "side_locker",
-    "image" : "side_locker.png",
+    "image" : ["side_locker.png"],
     "height" : ""
   },
   {
+    "name": "NPC",
+    "image": ["1.png"]
+  },
+  {
     "name" : "chest",
-    "image" : "chest.png",
+    "image" : ["opened_chest.png", "closed_chest.png"],
     "height" : ""
   },
   {
     "name" : "carpet",
-    "image" : "carpet.png"
+    "image" : ["carpet.png"]
   }
 ]

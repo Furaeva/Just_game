@@ -4,7 +4,7 @@ from Utilities.animation import Animation
 
 LEFT = 1
 RIGHT = 2
-MOVE_SPEED = 3  # убать
+MOVE_SPEED = 3  # убрать
 
 
 def load_souces():
@@ -118,18 +118,25 @@ class Player(sprite.Sprite):
 
     def collision(self, xvel, yvel, objects):
         for o in objects:
-            if self.rect.colliderect(o):       # если есть пересечение платформы с игроком
+            if self.rect.colliderect(o["object"]):       # если есть пересечение платформы с игроком
 
                 if xvel > 0:                       # если движется вправо
-                    self.rect.right = o.rect.left  # то не движется вправо
+                    self.rect.right = o["object"].rect.left  # то не движется вправо
 
                 if xvel < 0:                       # если движется влево
-                    self.rect.left = o.rect.right  # то не движется влево
+                    self.rect.left = o["object"].rect.right  # то не движется влево
 
                 if yvel > 0:
-                    self.rect.bottom = o.rect.top
+                    self.rect.bottom = o["object"].rect.top
                     self.yvel = 0
 
                 if yvel < 0:
-                    self.rect.top = o.rect.bottom
+                    self.rect.top = o["object"].rect.bottom
                     self.yvel = 0
+
+    def area_collision(self, objects):
+        for o in objects:
+            if self.rect.colliderect(o["object"].area):
+                return True, o
+            else:
+                return False, None

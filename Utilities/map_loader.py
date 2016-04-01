@@ -1,5 +1,6 @@
 # from tkinter import *
 from Classes.StaticObject import StaticObject
+from Utilities.load_image import load_image
 import json
 import os
 import pygame
@@ -9,24 +10,39 @@ def map_loader(json_map, objects_descr):
     """
     :param json_map: Карта в формате json
     :param objects_descr: Описания предметов в формате json
-    :return: Список объектов, который идёт на рендер
+    :return: Список словарей с объектами и функциями (если есть), бэкграунд
+    и стартовую позицию персонажа (кортеж)
     """
     obj_list = []
+
     for dic in json_map:
-        x = dic['pos'][0]
-        y = dic['pos'][1]
-        for obj in objects_descr:
-            if dic['name'] == obj['name']:
-                picture = obj['image']
-                if dic['type'] == 'object':
-                    height = obj['height']
-                else:
-                    height = False
+        if dic["type"] == "description":
+            start_pos = dic["start_player_pos"]
 
-        new_obj = StaticObject(x, y, picture, height=height)
+        if dic["type"] == "background":
+            # x = y = 0
+            # image = dic["image"]
+            # back = StaticObject(x, y, image)
+            back = {"surface": load_image(dic["image"]), "address": dic["image"]}
 
-        obj_list.append(new_obj)
-        return obj_list
+        if dic["type"][0] == "object":
+            x = dic['pos'][0]
+            y = dic['pos'][1]
+            for obj in objects_descr:
+                if dic['name'] == obj['name']:
+                    image = obj['image'][0]
+                    if dic['type'][1] == 'touchable_object':
+                        height = obj['height']
+                    else:
+                        height = False
+
+            new_obj = StaticObject(x, y, image, height=height)
+            obj_dict = {"object": new_obj, "function": dic["function"],
+                        "index": dic["index"], "name": dic["name"]}
+
+            obj_list.append(obj_dict)
+
+    return obj_list, back, start_pos
 
 
 if __name__ == '__main__':

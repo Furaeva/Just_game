@@ -1,7 +1,7 @@
 [
   {
     "type": "description",
-    "start_player_pos": [10, 10]
+    "start_player_pos": [20, 20]
   },
   {
     "type": "background",
@@ -11,7 +11,14 @@
     "index" : 1,
     "type" : ["object", "touchable_object"],
     "name" : "front_locker",
-    "pos" : [300, 300],
+    "pos" : [200, 200],
     "function" : ["hello", "Здесь должны быть параметры функции"]
+  },
+  {
+    "index": 2,
+    "type": ["object", "untouchable_object"],
+    "name": "NPC",
+    "pos": [200, 100],
+    "function": ["hello", "null"]
   }
 ]

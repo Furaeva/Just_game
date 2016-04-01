@@ -19,6 +19,6 @@ main = PyMain(width=WIN_WIDTH, height=WIN_HEIGHT)
 hero = Player(HERO_POSITION_X, HERO_POSITION_Y)
 locker = StaticObject(200, 200, 'lockerx2.png', height=24)
 
-main.add_render_object(locker)
+main.add_render_object({"object": locker, "fucntion": None})
 
 main.mainloop(hero, fps=FPS)  # Главный цикл

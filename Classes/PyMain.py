@@ -1,5 +1,6 @@
 from pygame import *
 from Utilities.sorting import *
+from Utilities.obj_funcs_parser import obj_funcs_parser
 import sys
 
 FPS = 30
@@ -43,9 +44,16 @@ class PyMain:
         clock = time.Clock()
         while True:
             for e in event.get():
+                if e.type == KEYDOWN and e.key == K_SPACE:
+                    value, objct = hero.area_collision(self.render_list)
+                    if value:
+                        # Проверка на пересечение с объектами, которым присвоена какая-либо функция
+                        obj_funcs_parser(objct)  # Парсинг
+
                 hero.event(e)
+
                 for obj in self.render_list:
-                    obj.event(e)
+                    obj["object"].event(e)
                 for obj in self.none_render_list:
                     obj.event(e)
                 if e.type == QUIT:
@@ -55,17 +63,17 @@ class PyMain:
             self.screen.fill(BACKGROUND_COLOR)
 
             for obj in self.render_list:
-                obj.update(dt)
+                obj["object"].update(dt)
 
             hero.update(dt, self.render_list)
 
-            self.add_render_object(hero)  # Добавляем героя в рендер-лист
+            self.add_render_object({"object": hero, "function": None})  # Добавляем героя в рендер-лист
 
             sort_by_y(self.render_list)   # Сортируем
 
             for obj in self.render_list:  # Отрисовываем
-                obj.render(self.screen)
+                obj["object"].render(self.screen)
 
-            self.del_render_object(hero)  # Удаляем героя из рендер-листа
+            self.del_render_object({"object": hero, "function": None})  # Удаляем героя из рендер-листа
 
             display.flip()
