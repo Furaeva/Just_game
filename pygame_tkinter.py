@@ -51,23 +51,22 @@ filemenu = Menu(menubar, tearoff=0)
 filemenu.add_command(label="Open", command=open_dialog.open)
 filemenu.add_command(label="Save", command=open_dialog.open)
 filemenu.add_separator()
-filemenu.add_command(label="Exit", command=root.destroy)
+filemenu.add_command(label="Exit", command=root.quit)
 menubar.add_cascade(label="File", menu=filemenu)
 
-# create more pulldown menus
-editmenu = Menu(menubar, tearoff=0)
-editmenu.add_command(label="Cut", command=stub)
-editmenu.add_command(label="Copy", command=stub)
-editmenu.add_command(label="Paste", command=stub)
-menubar.add_cascade(label="Edit", menu=editmenu)
 
-helpmenu = Menu(menubar, tearoff=0)
-helpmenu.add_command(label="About", command=stub)
-menubar.add_cascade(label="Help", menu=helpmenu)
 
 # display the menu
 root.config(menu=menubar)
 RUN = True
+
+win_list = [root]
+
+show = BooleanVar()
+helpmenu = Menu(menubar, tearoff=0)
+helpmenu.add_command(label="About", command=stub)
+helpmenu.add_checkbutton(label="Win", variable=show)
+menubar.add_cascade(label="Help", menu=helpmenu)
 
 clock = pygame.time.Clock()
 render_list = []
@@ -76,6 +75,8 @@ start_pos = (0, 0)
 back = (100, 100, 100)
 
 while RUN:
+    show_val = show.get()
+
     map_address = open_dialog.file_name
 
     for e in pygame.event.get():
@@ -104,7 +105,16 @@ while RUN:
         obj["object"].render(screen)
 
     pygame.display.flip()
-    root.update()
+
+    for win in win_list:
+        win.update()
+
+    if show.get() != show_val and show.get():
+        root2 = Tk()
+        win_list.append(root2)
+    elif show.get() != show_val and not show.get():
+        root2.destroy()
+        win_list.remove(root2)
 
     if open_dialog.file_name and open_dialog.file_name != map_address:
         f = open(open_dialog.file_name)
