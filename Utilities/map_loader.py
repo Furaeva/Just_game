@@ -28,7 +28,7 @@ def map_loader(json_map, objects_descr):
         if dic["type"][0] == "object":
             x = dic['pos'][0]
             y = dic['pos'][1]
-            for obj in objects_descr:
+            for obj in objects_descr[0]["objects"]:
                 if dic['name'] == obj['name']:
                     image = obj['image'][0]
                     if dic['type'][1] == 'touchable':

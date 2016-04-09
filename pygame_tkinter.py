@@ -27,8 +27,6 @@ def on_map_open(file):
 root = Tk()
 embed = Frame(root, width=640, height=480)
 embed.grid(row=0, column=2)
-# playpausebutton = Button(root, command=playpause, text="Play/Pause")
-# playpausebutton.grid(row=1, column=2)
 root.update()
 os.environ['SDL_WINDOWID'] = str(embed.winfo_id())
 if platform == 'windows':
