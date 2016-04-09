@@ -13,7 +13,7 @@ class StaticObject(sprite.Sprite):
         else:
             self.type = "untouchable"
             self.rect = self.image.get_rect()
-            self.area = Rect((x + 10), (y + 10), (self.rect + 10), (self.rect.height + 10))
+            self.area = Rect((x + 10), (y + 10), (self.rect.width + 10), (self.rect.height + 10))
 
     def update(self, dt):
         pass

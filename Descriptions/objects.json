@@ -5,12 +5,13 @@
       {
         "name": "front_locker",
         "image": ["lockerx2.png"],
-        "icon": [""],
+        "icon": ["flower2.gif"],
         "height": 24
       },
       {
         "name": "side_locker",
         "image": ["side_locker.png"],
+        "icon": [""],
         "height": ""
       },
       {
