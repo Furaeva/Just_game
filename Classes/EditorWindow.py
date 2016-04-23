@@ -1,11 +1,16 @@
 import tkinter as tk
+import pygame
 from pygame import *
+import PIL as pil
+from PIL import Image, ImageTk
 import platform
+import threading
 import os
-import json
 from Utilities.sorting import *
 from Utilities.map_loader import *
 from Utilities.menu_functions import *
+from Classes.DemoCursor import DemoCursor
+
 
 WIDTH = 640
 HEIGHT = 480
@@ -24,6 +29,7 @@ class EditorWidow(tk.Frame):
         self.walls_list = []
         self.back = (100, 100, 100)
         self.start_pos = None
+        self.cursor = DemoCursor(False, False)
 
         self.open_dialog = open_dialog
 
@@ -38,14 +44,24 @@ class EditorWidow(tk.Frame):
         os.environ['SDL_WINDOWID'] = str(self.embed.winfo_id())
         if platform == 'windows':
             os.environ['SDL_VIDEODRIVER'] = 'windib'
-
-        display.init()
-        self.screen = display.set_mode((640, 480))
-        display.flip()
+        pygame.init()
+        self.screen = pygame.display.set_mode((640, 480))
+        # pygame.display.flip()
 
         self.show_obj = tk.IntVar()
         self.show_walls = tk.IntVar()
         self.add_menu()
+        self.root.bind('<Motion>', self.on_mouse_move)
+        self.root.bind('<Button-1>', self.on_mouse_button)
+
+    def on_mouse_button(self, event):
+        print("Button")
+        e = pygame.event.Event(MOUSEBUTTONDOWN, {"pos": (event.x, event.y), "button": 1})
+        pygame.event.post(e)
+
+    def on_mouse_move(self, event):
+        e = pygame.event.Event(MOUSEMOTION, {"pos": (event.x, event.y)})
+        pygame.event.post(e)
 
     def add_menu(self):
         menubar = tk.Menu(self.root)
@@ -82,8 +98,25 @@ class EditorWidow(tk.Frame):
         t.geometry("+800+400")
         t.resizable(width=False, height=False)
         t.transient(self.root)
+
+        canvas = tk.Canvas(t, width=200, height=200)
+        frame = tk.Frame(canvas, width=200, height=200)
+        vsb = tk.Scrollbar(t, orient="vertical")
+        canvas.configure(yscrollcommand=vsb.set)
+
+        frame.pack(side=LEFT)
+        vsb.pack(side="right", fill='y')
+        canvas.pack(side="right", fill="both", expand=True)
+        canvas.create_window((0, 0), window=frame, anchor="nw")
+
+        brushes = []
+
         for obj in self.description[0]["objects"]:
-            pass
+            self.create_brush(frame, obj, brushes)
+
+        vsb.configure(command=canvas.yview)
+
+        frame.bind("<Configure>", lambda event, canvas=canvas: canvas.configure(scrollregion=canvas.bbox("all")))
 
     def create_walls_window(self):
         t = tk.Toplevel(self)
@@ -91,6 +124,25 @@ class EditorWidow(tk.Frame):
         t.wm_title("Walls Brush")
         t.geometry("+800+100")
         t.transient(self.root)
+
+    def create_brush(self, frame, obj, brushes):
+        b = tk.Button(frame)
+
+        photo = pil.Image.open(os.path.join("..", "Pictures", obj["icon"]))
+        photo = photo.resize((25, 25), pil.Image.ANTIALIAS)
+        photo = pil.ImageTk.PhotoImage(photo)
+
+        b.config(image=photo, width=25, height=25, command=lambda: self.get_object(obj["index"]))
+        b.image = photo
+
+        b.grid(row=len(brushes)//6, column=len(brushes) % 6 + 1)
+
+        brushes.append(b)
+
+    def get_object(self, index):
+        for obj in self.description[0]["objects"]:
+            if obj["index"] == index:
+                self.cursor = DemoCursor(obj, self.render_list)
 
     def close_window(self, win):
         if win:
@@ -103,6 +155,11 @@ class EditorWidow(tk.Frame):
             map_address = self.open_dialog.file_name
 
             for e in pygame.event.get():
+                self.cursor.event(e)
+
+                if self.cursor.render_list:
+                    self.render_list = self.cursor.render_list
+
                 for obj in self.render_list:
                     obj["object"].event(e)
                 if e.type == pygame.QUIT:
@@ -120,10 +177,14 @@ class EditorWidow(tk.Frame):
             for obj in self.render_list:
                 obj["object"].update(dt)
 
+            self.render_list.append({"object": self.cursor})
+
             sort_by_y(self.render_list)
 
             for obj in self.render_list:
                 obj["object"].render(self.screen)
+
+            self.render_list.remove({"object": self.cursor})
 
             display.flip()
 
@@ -146,7 +207,6 @@ def on_map_open(file):
         print(data)
     finally:
         file.close()
-
 
 if __name__ == "__main__":
     f = open(os.path.join("..", "Descriptions", "objects.json"))

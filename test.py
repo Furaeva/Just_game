@@ -23,15 +23,29 @@ from PIL import Image, ImageTk
 root = Tk()
 root.geometry("200x200")
 # pic = PhotoImage(os.path.join('Pictures', 'flower1.gif'))
-pic = PhotoImage(file='Pictures/flower1.gif')
-label = Label(root, image=pic)
-label.pack()
+t = Toplevel(root)
 
-b = Button(root, justify=LEFT)
-photo = Image.open(os.path.join("Pictures", "flower1.gif"))
-photo = photo.resize((25, 25), Image.ANTIALIAS)
-photo = ImageTk.PhotoImage(photo)
-b.config(image=photo, width=25, height=25)
-b.pack(side=LEFT)
+canvas = Canvas(t, width=200, height=200)
+frame = Frame(canvas, width=200, height=200)
+vsb = Scrollbar(t, orient="vertical")
+
+canvas.configure(yscrollcommand=vsb.set)
+frame.pack(side=LEFT)
+vsb.pack(side="right", fill='y')
+canvas.pack(side="right", fill="both", expand=True)
+
+canvas.create_window((0, 0), window=frame, anchor="nw")
+
+for i in range(0, 20):
+    b = Button(frame, justify=LEFT)
+    photo = Image.open(os.path.join("Pictures", "flower1.gif"))
+    photo = photo.resize((25, 25), Image.ANTIALIAS)
+    photo = ImageTk.PhotoImage(photo)
+    b.config(image=photo, width=25, height=25)
+    b.image = photo
+    b.grid()
+
+vsb.configure(command=canvas.yview)
+frame.bind("<Configure>", lambda event, canvas=canvas: canvas.configure(scrollregion=canvas.bbox("all")))
 
 root.mainloop()

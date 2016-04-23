@@ -4,6 +4,7 @@ from Classes.PyMain import PyMain
 # from pygame import *
 
 from Utilities.load_image import load_image
+from Utilities.map_loader import object_converter
 
 
 class SuperPyMain(PyMain):
@@ -27,25 +28,39 @@ class SuperPyMain(PyMain):
 
 
 class DemoCursor:
-    def __init__(self):
-        self.image = load_image('locker.png', path='../Pictures/', alpha_channel=True)
-        self.rect = self.image.get_rect()
+    def __init__(self, obj_dict, render_list):
+        self.obj_dict = obj_dict
+        self.render_list = render_list
+
+        if obj_dict:
+            self.image = obj_dict["object"].image
+            self.rect = obj_dict["object"].rect
+        else:
+            self.rect = pygame.Rect(10, 10, 0, 0)
 
     def event(self, event):
-        if event.type == pygame.MOUSEMOTION:
-            # print(event.pos)
-            self.rect.center = event.pos
+        if self.obj_dict:
+            if event.type == pygame.MOUSEMOTION:
+                print(event.pos)
+                self.rect.center = event.pos
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                self.obj_dict["object"].rect = self.rect
+                self.render_list.append(self.obj_dict)
+                self.obj_dict = False
 
     def update(self, pos):
         # self.rect.move(*pos)
         pass
 
     def render(self, screen):
-        screen.blit(self.image, self.rect)
+        if self.obj_dict:
+            screen.blit(self.image, self.rect)
+        else:
+            pass
 
 
 if __name__ == "__main__":
     window = SuperPyMain()
-    obj = DemoCursor()
+    obj = DemoCursor("locker.png")
     window.add_render_object(obj)
     window.mainloop()

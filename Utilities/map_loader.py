@@ -45,6 +45,12 @@ def map_loader(json_map, objects_descr):
     return obj_list, back, start_pos
 
 
+def object_converter(object_dict, img, rect):
+    new_obj = StaticObject(0, 0, img, height=1)
+    new_obj.rect = rect
+    obj_dict = {"object": new_obj, "function": None, "index": None, "name": object_dict["name"]}
+
+
 if __name__ == '__main__':
     s = pygame.display.set_mode((2, 2))
     f = open(os.path.join('Maps', 'test_map.json'))

@@ -3,29 +3,24 @@
     "objects":
     [
       {
+        "index": 1,
         "name": "front_locker",
         "image": ["lockerx2.png"],
-        "icon": ["flower2.gif"],
+        "icon": "lockerx2.png",
         "height": 24
       },
       {
-        "name": "side_locker",
-        "image": ["side_locker.png"],
-        "icon": [""],
-        "height": ""
-      },
-      {
+        "index": 2,
         "name": "NPC",
-        "image": ["1.png"]
+        "image": ["1.png"],
+        "icon": "1.png"
       },
       {
+        "index": 3,
         "name": "chest",
-        "image": ["opened_chest.png", "closed_chest.png"],
+        "image": ["opened_chest.gif", "chest.gif"],
+        "icon": "chest.gif",
         "height": ""
-      },
-      {
-        "name": "carpet",
-        "image": ["carpet.png"]
       }
     ],
     "walls": []

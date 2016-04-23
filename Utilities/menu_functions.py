@@ -1,10 +1,11 @@
-from tkinter import *
-import json
+# from tkinter import *
+# import json
 from tkinter.filedialog import *
 
 
 class OpenDialog:
     def __init__(self, cb):
+
         self.file_name = False
         # Функция, которая будет запущена при открытии файла
         self._cb = cb
