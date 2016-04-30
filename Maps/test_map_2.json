@@ -1,24 +1,53 @@
 [
-  {
-    "type": "description",
-    "start_player_pos": [20, 20]
-  },
-  {
-    "type": "background",
-    "image": "back1.png"
-  },
-  {
-    "index" : 1,
-    "type" : ["object", "touchable_object"],
-    "name" : "front_locker",
-    "pos" : [200, 200],
-    "function" : ["hello", "Function variables here"]
-  },
-  {
-    "index": 2,
-    "type": ["object", "untouchable_object"],
-    "name": "NPC",
-    "pos": [200, 100],
-    "function": ["hello", "null"]
-  }
+    {
+        "start_player_pos": [
+            20,
+            20
+        ],
+        "type": "description"
+    },
+    {
+        "image": "back1.png",
+        "type": "background"
+    },
+    {
+        "argument": null,
+        "index": 4,
+        "name": "chest",
+        "pos": [
+            423,
+            269
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 1,
+        "name": "NPC",
+        "pos": [
+            136,
+            306
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 3,
+        "name": "front_locker",
+        "pos": [
+            317,
+            309
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 2,
+        "name": "front_locker",
+        "pos": [
+            208,
+            310
+        ],
+        "type": "object"
+    }
 ]

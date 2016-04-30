@@ -1,4 +1,6 @@
 import pygame
+import json
+import os
 from pygame import *
 from Utilities.load_image import load_image
 from Classes.PyMain import PyMain
@@ -10,15 +12,18 @@ WIN_WIDTH = 700
 WIN_HEIGHT = 600
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 BACKGROUND_COLOR = (0, 0, 0)
-HERO_POSITION_X = 300
-HERO_POSITION_Y = 300
 
 pygame.init()
-main = PyMain(width=WIN_WIDTH, height=WIN_HEIGHT)
 
-hero = Player(HERO_POSITION_X, HERO_POSITION_Y)
-locker = StaticObject(200, 200, 'lockerx2.png', height=24)
+f = open(os.path.join("Maps", "test_map_2.json"))
+json_map = json.load(f)
+f.close()
+f = open(os.path.join("Descriptions", "objects.json"))
+description = json.load(f)
+f.close()
 
-main.add_render_object({"object": locker, "fucntion": None})
+main = PyMain(json_map, description, width=WIN_WIDTH, height=WIN_HEIGHT)
+
+hero = Player(main.start_pos[0], main.start_pos[1])
 
 main.mainloop(hero, fps=FPS)  # Главный цикл

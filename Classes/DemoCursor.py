@@ -1,5 +1,6 @@
 import sys
 import pygame
+from setting import IMAGE_PATH
 from Classes.PyMain import PyMain
 from Utilities.load_image import load_image
 from Classes.StaticObject import StaticObject
@@ -33,7 +34,7 @@ class DemoCursor:
         if description:
             self.obj_list = {}
             self.index = len(self.render_list) + 1
-            self.image = load_image(description["image"][0])
+            self.image = load_image(description["image"][0], path=IMAGE_PATH)
             self.pos_rect = self.image.get_rect()
             self.rect = pygame.Rect((self.image.get_rect().x, self.image.get_rect().y),
                                     (self.image.get_rect().width, description["height"]))
@@ -50,16 +51,16 @@ class DemoCursor:
                 self.rect.center = (event.pos[0], event.pos[1] + self.a)
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.description["height"] != 0:
+                if self.description["type"] != "untouchable":
                     new_obj = StaticObject(self.rect.x, self.rect.y, self.description["image"][0],
                                            height=self.description["height"])
-                    self.obj_list = {"object": new_obj, "function": [None, None],
-                                     "type": ["object", "touchable"], "index": self.index,
+                    self.obj_list = {"object": new_obj, "argument": None,
+                                     "type": "object", "index": self.index,
                                      "name": self.description["name"]}
                 else:
                     new_obj = StaticObject(self.pos_rect.x, self.pos_rect.y, self.description["image"][0])
-                    self.obj_list = {"object": new_obj, "function": [None, None],
-                                     "type": ["object", "untouchable"], "index": self.index,
+                    self.obj_list = {"object": new_obj, "argument": None,
+                                     "type": "object", "index": self.index,
                                      "name": self.description["name"]}
 
                 self.render_list.append(self.obj_list)

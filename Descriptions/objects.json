@@ -1,10 +1,11 @@
 [
   {
-    "objects":
-    [
+    "objects": [
       {
         "index": 1,
         "name": "front_locker",
+        "class": "Locker",
+        "type": "touchable",
         "image": ["lockerx2.png"],
         "icon": "lockerx2.png",
         "height": 24
@@ -12,6 +13,8 @@
       {
         "index": 2,
         "name": "NPC",
+        "class": "NPC",
+        "type": "touchable",
         "image": ["1.png"],
         "icon": "1.png",
         "height": 16
@@ -19,9 +22,20 @@
       {
         "index": 3,
         "name": "chest",
+        "class": "Chest",
+        "type": "touchable",
         "image": ["opened_chest.gif"],
         "icon": "chest.gif",
         "height": 76
+      },
+      {
+        "index": 4,
+        "name": "flower",
+        "class": "Flower",
+        "type": "touchable",
+        "image": ["flower1.gif"],
+        "icon": "flower1.gif",
+        "height": 20
       }
     ],
     "walls": []

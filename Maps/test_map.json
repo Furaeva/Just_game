@@ -12,6 +12,6 @@
     "type" : ["object", "touchable"],
     "name" : "front_locker",
     "pos" : [300, 300],
-    "function" : ["hello", "Здесь должны быть параметры функции"]
+    "argument" : null
   }
 ]

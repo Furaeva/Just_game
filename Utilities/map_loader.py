@@ -1,4 +1,5 @@
 # from tkinter import *
+from setting import IMAGE_PATH
 from Classes.StaticObject import StaticObject
 from Utilities.load_image import load_image
 import json
@@ -23,45 +24,27 @@ def map_loader(json_map, objects_descr):
             # x = y = 0
             # image = dic["image"]
             # back = StaticObject(x, y, image)
-            back = {"surface": load_image(dic["image"]), "address": dic["image"]}
+            back = {"surface": load_image(dic["image"], path=IMAGE_PATH), "address": dic["image"]}
 
-        if dic["type"][0] == "object":
+        if dic["type"] == "object":
             x = dic['pos'][0]
             y = dic['pos'][1]
             for obj in objects_descr[0]["objects"]:
                 if dic['name'] == obj['name']:
                     image = obj['image'][0]
-                    if dic['type'][1] == 'touchable':
+                    if obj['type'] == 'touchable':
                         height = obj['height']
                     else:
                         height = False
 
             new_obj = StaticObject(x, y, image, height=height)
             print(new_obj.rect.x, new_obj.rect.y)
-            obj_dict = {"object": new_obj, "function": dic["function"],
+            obj_dict = {"object": new_obj, "argument": dic["argument"],
                         "index": dic["index"], "type": dic["type"], "name": dic["name"]}
 
             obj_list.append(obj_dict)
 
     return obj_list, back, start_pos
-
-
-def render_list_to_json(render_list, back, start_pos):
-    descr = {"type": "description", "start_player_pos": start_pos}
-    background = {"type": "background", "image": back}
-    future_map = [descr, background]
-
-    for obj_dic in render_list:
-        if obj_dic["type"] != "cursor":
-            obj = {"index": obj_dic["index"], "type": obj_dic["type"], "name": obj_dic["name"],
-                   "pos": (obj_dic["object"].rect.x, obj_dic["object"].rect.y), "function": obj_dic["function"]}
-            future_map.append(obj)
-
-            print("!!!!:", obj["pos"])
-
-    json_map = json.dumps(future_map, sort_keys=True, indent=4)
-
-    return json_map
 
 
 if __name__ == '__main__':

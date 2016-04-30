@@ -1,3 +1,4 @@
+import os
 from pygame import *
 from Utilities.load_image import load_image
 from Utilities.animation import Animation
@@ -5,6 +6,8 @@ from Utilities.animation import Animation
 LEFT = 1
 RIGHT = 2
 MOVE_SPEED = 3  # убрать
+from setting import *
+
 
 
 def load_souces():
@@ -12,10 +15,10 @@ def load_souces():
     LEFT_SPRITES = load_image(['1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png'], alpha_channel=True)
     RIGHT_SPRITES = load_image(['1.1.png', '2.1.png', '3.1.png', '4.1.png',
                                 '5.1.png', '6.1.png', '7.1.png', '8.1.png'], alpha_channel=True)
-    UP_SPRITES = load_image('1.png', alpha_channel=True)
+    UP_SPRITES = LEFT_SPRITES
     # UP_SPRITES = load_image(['1.png'], alpha_channel=True)
-    DOWN_SPRITES = load_image('1.1.png', alpha_channel=True)
-    LEFT_STOP_SPRITES = load_image('1.png', alpha_channel=True)
+    DOWN_SPRITES = RIGHT_SPRITES
+    LEFT_STOP_SPRITES = load_image('1.png', path=IMAGE_PATH, alpha_channel=True)
     RIGHT_STOP_SPRITES = load_image('1.1.png', alpha_channel=True)
 
 
@@ -118,7 +121,7 @@ class Player(sprite.Sprite):
 
     def collision(self, xvel, yvel, objects):
         for o in objects:
-            if self.rect.colliderect(o["object"]):       # если есть пересечение платформы с игроком
+            if self.rect.colliderect(o["object"].rect):       # если есть пересечение платформы с игроком
 
                 if xvel > 0:                       # если движется вправо
                     self.rect.right = o["object"].rect.left  # то не движется вправо
@@ -137,6 +140,6 @@ class Player(sprite.Sprite):
     def area_collision(self, objects):
         for o in objects:
             if self.rect.colliderect(o["object"].area):
+                print(o)
                 return True, o
-            else:
-                return False, None
+        return False, None
