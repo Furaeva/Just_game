@@ -1,10 +1,8 @@
 import sys
 import pygame
 from Classes.PyMain import PyMain
-# from pygame import *
-
 from Utilities.load_image import load_image
-from Utilities.map_loader import object_converter
+from Classes.StaticObject import StaticObject
 
 
 class SuperPyMain(PyMain):
@@ -28,33 +26,52 @@ class SuperPyMain(PyMain):
 
 
 class DemoCursor:
-    def __init__(self, obj_dict, render_list):
-        self.obj_dict = obj_dict
+    def __init__(self, description, render_list):
+        self.description = description
         self.render_list = render_list
 
-        if obj_dict:
-            self.image = obj_dict["object"].image
-            self.rect = obj_dict["object"].rect
+        if description:
+            self.obj_list = {}
+            self.index = len(self.render_list) + 1
+            self.image = load_image(description["image"][0])
+            self.pos_rect = self.image.get_rect()
+            self.rect = pygame.Rect((self.image.get_rect().x, self.image.get_rect().y),
+                                    (self.image.get_rect().width, description["height"]))
+
+            self.a = self.pos_rect.center[1] - self.rect.center[1]
         else:
             self.rect = pygame.Rect(10, 10, 0, 0)
+            self.pos_rect = self.rect
 
     def event(self, event):
-        if self.obj_dict:
+        if self.description:
             if event.type == pygame.MOUSEMOTION:
-                print(event.pos)
-                self.rect.center = event.pos
+                self.pos_rect.center = event.pos
+                self.rect.center = (event.pos[0], event.pos[1] + self.a)
+
             if event.type == pygame.MOUSEBUTTONDOWN:
-                self.obj_dict["object"].rect = self.rect
-                self.render_list.append(self.obj_dict)
-                self.obj_dict = False
+                if self.description["height"] != 0:
+                    new_obj = StaticObject(self.rect.x, self.rect.y, self.description["image"][0],
+                                           height=self.description["height"])
+                    self.obj_list = {"object": new_obj, "function": [None, None],
+                                     "type": ["object", "touchable"], "index": self.index,
+                                     "name": self.description["name"]}
+                else:
+                    new_obj = StaticObject(self.pos_rect.x, self.pos_rect.y, self.description["image"][0])
+                    self.obj_list = {"object": new_obj, "function": [None, None],
+                                     "type": ["object", "untouchable"], "index": self.index,
+                                     "name": self.description["name"]}
+
+                self.render_list.append(self.obj_list)
+                self.description = False
 
     def update(self, pos):
         # self.rect.move(*pos)
         pass
 
     def render(self, screen):
-        if self.obj_dict:
-            screen.blit(self.image, self.rect)
+        if self.description:
+            screen.blit(self.image, self.pos_rect)
         else:
             pass
 

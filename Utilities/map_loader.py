@@ -37,18 +37,31 @@ def map_loader(json_map, objects_descr):
                         height = False
 
             new_obj = StaticObject(x, y, image, height=height)
+            print(new_obj.rect.x, new_obj.rect.y)
             obj_dict = {"object": new_obj, "function": dic["function"],
-                        "index": dic["index"], "name": dic["name"]}
+                        "index": dic["index"], "type": dic["type"], "name": dic["name"]}
 
             obj_list.append(obj_dict)
 
     return obj_list, back, start_pos
 
 
-def object_converter(object_dict, img, rect):
-    new_obj = StaticObject(0, 0, img, height=1)
-    new_obj.rect = rect
-    obj_dict = {"object": new_obj, "function": None, "index": None, "name": object_dict["name"]}
+def render_list_to_json(render_list, back, start_pos):
+    descr = {"type": "description", "start_player_pos": start_pos}
+    background = {"type": "background", "image": back}
+    future_map = [descr, background]
+
+    for obj_dic in render_list:
+        if obj_dic["type"] != "cursor":
+            obj = {"index": obj_dic["index"], "type": obj_dic["type"], "name": obj_dic["name"],
+                   "pos": (obj_dic["object"].rect.x, obj_dic["object"].rect.y), "function": obj_dic["function"]}
+            future_map.append(obj)
+
+            print("!!!!:", obj["pos"])
+
+    json_map = json.dumps(future_map, sort_keys=True, indent=4)
+
+    return json_map
 
 
 if __name__ == '__main__':

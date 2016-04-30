@@ -4,7 +4,6 @@ from pygame import *
 import PIL as pil
 from PIL import Image, ImageTk
 import platform
-import threading
 import os
 from Utilities.sorting import *
 from Utilities.map_loader import *
@@ -55,7 +54,6 @@ class EditorWidow(tk.Frame):
         self.root.bind('<Button-1>', self.on_mouse_button)
 
     def on_mouse_button(self, event):
-        print("Button")
         e = pygame.event.Event(MOUSEBUTTONDOWN, {"pos": (event.x, event.y), "button": 1})
         pygame.event.post(e)
 
@@ -67,7 +65,8 @@ class EditorWidow(tk.Frame):
         menubar = tk.Menu(self.root)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Open", command=self.open_dialog.open)
-        filemenu.add_command(label="Save", command=self.open_dialog.open)
+        filemenu.add_command(label="Save", command=self.save_map)
+        filemenu.add_command(label="Close", command=self.open_dialog.close)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.root.quit)
         menubar.add_cascade(label="File", menu=filemenu)
@@ -77,7 +76,20 @@ class EditorWidow(tk.Frame):
         view_menu.add_checkbutton(label="Walls", onvalue=1, offvalue=0, variable=self.show_walls,
                                   command=self.check_walls_window)
         menubar.add_cascade(label='View', menu=view_menu)
+        edit_menu = tk.Menu(menubar)
+        edit_menu.add_command(label="Clean", command=self.clean)
+        menubar.add_cascade(label="Edit", menu=edit_menu)
         self.root.config(menu=menubar)
+
+    def save_map(self):
+        json_map = render_list_to_json(self.render_list, self.back["address"], self.start_pos)
+        file = open(self.open_dialog.file_name, "w")
+        file.writelines(json_map)
+        file.close()
+
+    def clean(self):
+        self.render_list = []
+        self.cursor = DemoCursor(False, False)
 
     def check_obj_window(self):
         if self.show_obj.get():
@@ -177,14 +189,14 @@ class EditorWidow(tk.Frame):
             for obj in self.render_list:
                 obj["object"].update(dt)
 
-            self.render_list.append({"object": self.cursor})
+            self.render_list.append({"object": self.cursor, "type": "cursor"})
 
             sort_by_y(self.render_list)
 
             for obj in self.render_list:
                 obj["object"].render(self.screen)
 
-            self.render_list.remove({"object": self.cursor})
+            self.render_list.remove({"object": self.cursor, "type": "cursor"})
 
             display.flip()
 
@@ -195,6 +207,10 @@ class EditorWidow(tk.Frame):
                 json_map = json.loads(file.read())
                 self.render_list, self.back, self.start_pos = map_loader(json_map, self.description)
                 file.close()
+            if not self.open_dialog.file_name:
+                self.render_list = []
+                self.cursor = DemoCursor(False, False)
+                self.back = (100, 100, 100)
 
 
 def on_map_open(file):
@@ -214,4 +230,5 @@ if __name__ == "__main__":
     root = tk.Tk()
     open_dialog = OpenDialog(on_map_open)
     main = EditorWidow(descr, open_dialog, root)
+    f.close()
     main.m_loop()

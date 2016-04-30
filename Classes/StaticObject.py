@@ -13,6 +13,7 @@ class StaticObject(sprite.Sprite):
         else:
             self.type = "untouchable"
             self.rect = self.image.get_rect()
+            self.rect.x, self.rect.y = x, y
             self.area = Rect((x + 10), (y + 10), (self.rect.width + 10), (self.rect.height + 10))
 
     def update(self, dt):
@@ -24,6 +25,7 @@ class StaticObject(sprite.Sprite):
     def render(self, screen):
         if self.type == "touchable":
             y = self.rect.y - self.image.get_rect().height + self.rect.height
+            draw.rect(self.image, (120, 120, 120), self.rect)
             screen.blit(self.image, (self.rect.x, y))
         else:
             screen.blit(self.image, (self.rect.x, self.rect.y))

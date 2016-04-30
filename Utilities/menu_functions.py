@@ -18,6 +18,9 @@ class OpenDialog:
         # root.destroy()
         self._cb(file)
 
+    def close(self):
+        self.file_name = False
+
 
 def stub():
     """
@@ -25,7 +28,3 @@ def stub():
     """
     print("!!!")
     pass
-
-
-def close_brush(**kwargs):
-    print(kwargs)

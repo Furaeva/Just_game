@@ -12,7 +12,7 @@
     "type" : ["object", "touchable_object"],
     "name" : "front_locker",
     "pos" : [200, 200],
-    "function" : ["hello", "Здесь должны быть параметры функции"]
+    "function" : ["hello", "Function variables here"]
   },
   {
     "index": 2,
