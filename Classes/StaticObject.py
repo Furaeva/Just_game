@@ -1,6 +1,7 @@
 from pygame import *
-from setting import IMAGE_PATH
+from settings import IMAGE_PATH
 from Utilities.load_image import load_image
+from Utilities.inventory_objects_parser import *
 
 
 class StaticObject(sprite.Sprite):
@@ -29,8 +30,24 @@ class StaticObject(sprite.Sprite):
     def render(self, screen):
         if self.type == "touchable":
             y = self.rect.y - self.image.get_rect().height + self.rect.height
-            draw.rect(self.image, (120, 120, 120), self.rect)
+            # draw.rect(self.image, (120, 120, 120), self.rect)
             screen.blit(self.image, (self.rect.x, y))
-            draw.rect(screen, (100, 100, 100), self.area)
+            # draw.rect(screen, (100, 100, 100), self.area)
         else:
             screen.blit(self.image, (self.rect.x, self.rect.y))
+
+
+class Chest(StaticObject):
+    def __init__(self, names_list, x, y,  picture, height=False):
+        StaticObject.__init__(self, x, y,  picture, height)
+        self.inventory_objs_list = inventory_objects_parser(names_list)
+        self.state = "enabled"
+
+    def to_inventory(self, inv):
+        inv += self.inventory_objs_list
+        self.inventory_objs_list = []
+        self.state = "disabled"
+
+    def interaction(self, inventory):
+        if self.state == "enabled":
+            self.to_inventory(inventory)

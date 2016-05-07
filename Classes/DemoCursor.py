@@ -1,6 +1,6 @@
 import sys
 import pygame
-from setting import IMAGE_PATH
+from settings import IMAGE_PATH
 from Classes.PyMain import PyMain
 from Utilities.load_image import load_image
 from Classes.StaticObject import StaticObject

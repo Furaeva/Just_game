@@ -1,5 +1,5 @@
 # from tkinter import *
-from setting import IMAGE_PATH
+from settings import IMAGE_PATH
 from Classes.StaticObject import StaticObject
 from Utilities.load_image import load_image
 import json

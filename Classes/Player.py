@@ -6,7 +6,7 @@ from Utilities.animation import Animation
 LEFT = 1
 RIGHT = 2
 MOVE_SPEED = 3  # убрать
-from setting import *
+from settings import *
 
 
 
