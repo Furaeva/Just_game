@@ -1,6 +1,6 @@
 
 
-class InventoryObject():
+class InventoryObject:
     def __init__(self):
         self._text = None
 
