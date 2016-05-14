@@ -3,20 +3,30 @@ from Classes.inventory_objs_classes import *
 
 
 class Looting:
-    def __init__(self):
-        self.objects_names = []
+    def __init__(self, visibility):
+        self.visibility = visibility
+        self.objects = []
         self.sur = pygame.Surface((640, 200), pygame.SRCALPHA)
-        self.sur.fill((100, 100, 100, 70))
+        if visibility:
+            self.sur.fill((100, 100, 100, 70))
 
     def adds(self, o_list):
-        for o in o_list:
-            self.objects_names.append(o.text)
+        self.objects.append(o_list)
 
     def render(self, screen):
-        string = ', '.join(self.objects_names)
-        text = Text(string, color=(150, 150, 150), size=24, pos=(20, 20))
-        text.render(self.sur)
-        screen.blit(self.sur, (0, 0))
+        if self.visibility:
+            string = ''
+            for o in self.objects:
+                if o.type == 'consume':
+                    string = string + o.text + ' ' + 'x' + o.number
+                if o.type == 'quest_object':
+                    string += o.txt
+            string = ', '.join(self.objects)
+            text = Text(string, color=(150, 150, 150), size=24, pos=(20, 20))
+            text.render(self.sur)
+            screen.blit(self.sur, (0, 0))
+        else:
+            pass
 
 
 class Text:

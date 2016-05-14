@@ -1,6 +1,7 @@
 from pygame import *
 from Utilities.sorting import *
 from Utilities.map_loader import map_loader
+from Classes.Looting import Looting
 
 import sys
 
@@ -27,6 +28,7 @@ class PyMain:
         self.screen = display.set_mode((self.width, self.height))
         self.render_list, self.back, self.start_pos = map_loader(json_map, description)
         self.none_render_list = []
+        self.looting = Looting(False)
 
     def add_render_object(self, obj):
         self.render_list.append(obj)
@@ -46,11 +48,14 @@ class PyMain:
         while True:
             for e in event.get():
                 if e.type == KEYDOWN and e.key == K_SPACE:
+                    self.looting = Looting(False)
                     # Проверка на пересечение с объектами, которым присвоена какая-либо функция
                     value, objct = hero.area_collision(self.render_list)
                     if value:
                         # FIXME
                         if objct["name"] == "chest":
+                            self.looting = Looting(True)
+                            self.looting.adds(objct["argument"])
                             objct["object"].interaction(hero.inventory)
                             objct["argument"] = []
                             print("INVENTORY:", hero.inventory)
@@ -82,5 +87,7 @@ class PyMain:
                 obj["object"].render(self.screen)
 
             self.del_render_object({"object": hero})  # Удаляем героя из рендер-листа
+
+            self.looting.render(self.screen)
 
             display.flip()

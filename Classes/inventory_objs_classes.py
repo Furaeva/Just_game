@@ -29,12 +29,14 @@ class QuestObject(InventoryObject):
 class HealingPotion(Consume):
     def __init__(self, number):
         Consume.__init__(self, number)
+        self.type = 'consume'
         self._text = 'Healing Potion'
 
 
 class Scarf(QuestObject):
     def __init__(self):
         QuestObject.__init__(self)
+        self.type = 'quest_object'
         self._text = 'Scarf'
 
     def event(self):
