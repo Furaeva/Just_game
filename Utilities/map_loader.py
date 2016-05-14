@@ -24,7 +24,8 @@ def map_loader(json_map, objects_descr):
             # x = y = 0
             # image = dic["image"]
             # back = StaticObject(x, y, image)
-            back = {"surface": load_image(dic["image"], path=IMAGE_PATH), "address": dic["image"]}
+            back = {"surface": load_image(dic["image"], path=IMAGE_PATH), "address": dic["image"],
+                    "pos": (0, 0)}
 
         if dic["type"] == "object":
             x = dic['pos'][0]

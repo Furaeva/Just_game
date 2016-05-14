@@ -1,7 +1,7 @@
 [
   {
     "type": "description",
-    "start_player_pos": [10, 10],
+    "start_player_pos": [300, 300],
     "inventory": []
   },
   {
@@ -20,6 +20,6 @@
     "type": "object",
     "name": "chest",
     "pos": [400, 400],
-    "argument": [["Healing Potion", 2], ["Scarf"]]
+    "argument": [["Healing Potion", 2], ["Scarf"], ["Food", 5]]
   }
 ]

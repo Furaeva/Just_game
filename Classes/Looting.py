@@ -5,26 +5,27 @@ from Classes.inventory_objs_classes import *
 class Looting:
     def __init__(self, visibility):
         self.visibility = visibility
-        self.objects = []
+        self.names = []
+        self.pos = (0, 0)
         self.sur = pygame.Surface((640, 200), pygame.SRCALPHA)
         if visibility:
             self.sur.fill((100, 100, 100, 70))
 
     def adds(self, o_list):
-        self.objects.append(o_list)
+        for o in o_list:
+            if o.type == 'consume':
+                self.names.append('%s x%s' % (o.text, o.number))
+            if o.type == 'quest_object':
+                self.names.append(o.text)
 
-    def render(self, screen):
+    def render(self, screen, camera_pos):
         if self.visibility:
-            string = ''
-            for o in self.objects:
-                if o.type == 'consume':
-                    string = string + o.text + ' ' + 'x' + o.number
-                if o.type == 'quest_object':
-                    string += o.txt
-            string = ', '.join(self.objects)
+            string = ', '.join(self.names)
+            string = 'You took: ' + string
             text = Text(string, color=(150, 150, 150), size=24, pos=(20, 20))
             text.render(self.sur)
-            screen.blit(self.sur, (0, 0))
+            self.pos = (self.pos[0] - camera_pos[0], self.pos[1] - camera_pos[1])
+            screen.blit(self.sur, self.pos)
         else:
             pass
 
@@ -44,10 +45,10 @@ class Text:
 if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode([640, 480])
-    loot = Looting()
-    for i in range(0, 20):
-        potion = Potion()
-        loot.adds([potion])
+    loot = Looting(True)
+    potion = HealingPotion(5)
+    scarf = Scarf()
+    loot.adds([potion, scarf])
 
     while True:
         pygame.display.update()

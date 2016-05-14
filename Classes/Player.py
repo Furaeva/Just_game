@@ -88,10 +88,12 @@ class Player(sprite.Sprite):
             self.yvel = 0
             self.state = 'stop'
 
-        self.rect.y += self.yvel
+        camera_change = (self.xvel, self.yvel)
+        print(camera_change)
+        # self.rect.y += self.yvel
         self.collision(0, self.yvel, objects)
 
-        self.rect.x += self.xvel
+        # self.rect.x += self.xvel
         self.collision(self.xvel, 0, objects)
 
         # # Анимация
@@ -112,6 +114,7 @@ class Player(sprite.Sprite):
             self.image = self.anim_stop_left.get_sprite()
         if self.state == 'stop' and self.direction == RIGHT:
             self.image = self.anim_stop_right.get_sprite()
+        return camera_change
 
     def render(self, screen):
         x = self.rect.x - self.image.get_rect().width / 7
@@ -124,9 +127,11 @@ class Player(sprite.Sprite):
 
                 if xvel > 0:                       # если движется вправо
                     self.rect.right = o["object"].rect.left  # то не движется вправо
+                    self.xvel = 0
 
                 if xvel < 0:                       # если движется влево
                     self.rect.left = o["object"].rect.right  # то не движется влево
+                    self.xvel = 0
 
                 if yvel > 0:
                     self.rect.bottom = o["object"].rect.top

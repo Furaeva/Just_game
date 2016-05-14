@@ -18,8 +18,9 @@ class StaticObject(sprite.Sprite):
             self.rect.x, self.rect.y = x, y
             self.area = Rect((x - 10), (y - 10), (self.rect.width + 20), (self.rect.height + 20))
 
-    def update(self, dt):
-        pass
+    def update(self, dt, camera_pos):
+        self.rect.x -= camera_pos[0]
+        self.rect.y -= camera_pos[1]
 
     def event(self, e):
         pass
@@ -30,6 +31,7 @@ class StaticObject(sprite.Sprite):
     def render(self, screen):
         if self.type == "touchable":
             y = self.rect.y - self.image.get_rect().height + self.rect.height
+
             # draw.rect(self.image, (120, 120, 120), self.rect)
             screen.blit(self.image, (self.rect.x, y))
             # draw.rect(screen, (100, 100, 100), self.area)

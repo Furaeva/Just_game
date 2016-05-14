@@ -8,4 +8,6 @@ def inventory_objects_parser(names_list):
             inv_objs_list.append(HealingPotion(o[1]))
         if o[0] == "Scarf":
             inv_objs_list.append(Scarf())
+        if o[0] == "Food":
+            inv_objs_list.append(Food(o[1]))
     return inv_objs_list

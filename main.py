@@ -2,10 +2,9 @@ import pygame
 import json
 import os
 from pygame import *
-from Utilities.load_image import load_image
 from Classes.PyMain import PyMain
 from Classes.Player import Player
-from Classes.StaticObject import StaticObject
+from Classes.Camera import Camera
 
 FPS = 30
 WIN_WIDTH = 700
