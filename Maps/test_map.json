@@ -1,7 +1,8 @@
 [
   {
     "type": "description",
-    "start_player_pos": [10, 10]
+    "start_player_pos": [10, 10],
+    "inventory": []
   },
   {
     "type": "background",
@@ -9,9 +10,16 @@
   },
   {
     "index" : 1,
-    "type" : ["object", "touchable"],
+    "type" : "object",
     "name" : "front_locker",
     "pos" : [300, 300],
     "argument" : null
+  },
+  {
+    "index": 2,
+    "type": "object",
+    "name": "chest",
+    "pos": [400, 400],
+    "argument": [["Healing Potion", 2], ["Scarf"]]
   }
 ]

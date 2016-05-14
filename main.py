@@ -15,7 +15,7 @@ BACKGROUND_COLOR = (0, 0, 0)
 
 pygame.init()
 
-f = open(os.path.join("Maps", "test_map_2.json"))
+f = open(os.path.join("Maps", "test_map.json"))
 json_map = json.load(f)
 f.close()
 f = open(os.path.join("Descriptions", "objects.json"))

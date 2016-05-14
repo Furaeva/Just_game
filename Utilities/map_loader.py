@@ -1,6 +1,6 @@
 # from tkinter import *
 from settings import IMAGE_PATH
-from Classes.StaticObject import StaticObject
+from Classes.StaticObject import StaticObject, Chest
 from Utilities.load_image import load_image
 import json
 import os
@@ -37,8 +37,10 @@ def map_loader(json_map, objects_descr):
                     else:
                         height = False
 
-            new_obj = StaticObject(x, y, image, height=height)
-            print(new_obj.rect.x, new_obj.rect.y)
+            if dic["name"] == "chest":
+                new_obj = Chest(dic["argument"], x, y, image, height=height)
+            else:
+                new_obj = StaticObject(x, y, image, height=height)
             obj_dict = {"object": new_obj, "argument": dic["argument"],
                         "index": dic["index"], "type": dic["type"], "name": dic["name"]}
 

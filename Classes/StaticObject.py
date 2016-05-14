@@ -41,6 +41,7 @@ class Chest(StaticObject):
     def __init__(self, names_list, x, y,  picture, height=False):
         StaticObject.__init__(self, x, y,  picture, height)
         self.inventory_objs_list = inventory_objects_parser(names_list)
+        print("CHEST:", self.inventory_objs_list)
         self.state = "enabled"
 
     def to_inventory(self, inv):

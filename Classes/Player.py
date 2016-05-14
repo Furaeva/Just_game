@@ -2,12 +2,11 @@ import os
 from pygame import *
 from Utilities.load_image import load_image
 from Utilities.animation import Animation
+from settings import *
 
 LEFT = 1
 RIGHT = 2
 MOVE_SPEED = 3  # убрать
-from settings import *
-
 
 
 def load_souces():
@@ -16,7 +15,6 @@ def load_souces():
     RIGHT_SPRITES = load_image(['1.1.png', '2.1.png', '3.1.png', '4.1.png',
                                 '5.1.png', '6.1.png', '7.1.png', '8.1.png'], alpha_channel=True)
     UP_SPRITES = LEFT_SPRITES
-    # UP_SPRITES = load_image(['1.png'], alpha_channel=True)
     DOWN_SPRITES = RIGHT_SPRITES
     LEFT_STOP_SPRITES = load_image('1.png', path=IMAGE_PATH, alpha_channel=True)
     RIGHT_STOP_SPRITES = load_image('1.1.png', alpha_channel=True)
@@ -27,6 +25,7 @@ class Player(sprite.Sprite):
         sprite.Sprite.__init__(self)
         load_souces()
         self.image = None
+        self.inventory = []
         self.xvel = MOVE_SPEED
         self.yvel = MOVE_SPEED
         self.rect = Rect(x, y, 30, 10)

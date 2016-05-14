@@ -50,7 +50,12 @@ class PyMain:
                     value, objct = hero.area_collision(self.render_list)
                     if value:
                         # FIXME
-                        objct["object"].interaction(objct["argument"])
+                        if objct["name"] == "chest":
+                            objct["object"].interaction(hero.inventory)
+                            objct["argument"] = []
+                            print("INVENTORY:", hero.inventory)
+                        else:
+                            objct["object"].interaction(objct["argument"])
 
                 hero.event(e)
 
