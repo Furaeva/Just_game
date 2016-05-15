@@ -30,6 +30,7 @@ class Player(sprite.Sprite):
         self.yvel = MOVE_SPEED
         self.rect = Rect(x, y, 30, 10)
         self.state = 'stop'
+        self.fixme = 1
         # Направление для определения анимации покоя
         self.direction = LEFT
         # TODO: Бинарная матрица
@@ -60,7 +61,7 @@ class Player(sprite.Sprite):
         if e.type == KEYUP and e.key == K_DOWN:
             self.down = False
 
-    def update(self, dt, objects):
+    def update(self, dt, objects, camera_change):
         """
         Обновление состояния объекта. dt - сколько миллисекунд прошло с прошлого вызова данного метода
         """
@@ -88,13 +89,12 @@ class Player(sprite.Sprite):
             self.yvel = 0
             self.state = 'stop'
 
-        camera_change = (self.xvel, self.yvel)
-        print(camera_change)
         # self.rect.y += self.yvel
-        self.collision(0, self.yvel, objects)
-
         # self.rect.x += self.xvel
-        self.collision(self.xvel, 0, objects)
+        # self.collision(0, self.yvel, objects)
+        self.collision(self.xvel, self.yvel, objects)
+        camera_change = (-self.xvel, -self.yvel)
+        print(camera_change)
 
         # # Анимация
         for anim in [self.anim_right, self.anim_left, self.anim_up,
@@ -124,21 +124,25 @@ class Player(sprite.Sprite):
     def collision(self, xvel, yvel, objects):
         for o in objects:
             if self.rect.colliderect(o["object"].rect):       # если есть пересечение платформы с игроком
-
-                if xvel > 0:                       # если движется вправо
-                    self.rect.right = o["object"].rect.left  # то не движется вправо
+                print(1)
+                if xvel < 0:                       # если движется вправо
+                    self.rect.left = o["object"].rect.right  # то не движется вправо
+                    # o["object"].rect.left = self.rect.right
                     self.xvel = 0
 
-                if xvel < 0:                       # если движется влево
-                    self.rect.left = o["object"].rect.right  # то не движется влево
+                if xvel > 0:                       # если движется влево
+                    self.rect.right = o["object"].rect.left  # то не движется влево
+                    # o["object"].rect.right = self.rect.left
                     self.xvel = 0
 
                 if yvel > 0:
                     self.rect.bottom = o["object"].rect.top
+                    # o["object"].rect.top = self.rect.bottom
                     self.yvel = 0
 
                 if yvel < 0:
                     self.rect.top = o["object"].rect.bottom
+                    # o["object"].rect.bottom = self.rect.top
                     self.yvel = 0
 
     def area_collision(self, objects):

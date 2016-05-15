@@ -18,9 +18,11 @@ class StaticObject(sprite.Sprite):
             self.rect.x, self.rect.y = x, y
             self.area = Rect((x - 10), (y - 10), (self.rect.width + 20), (self.rect.height + 20))
 
-    def update(self, dt, camera_pos):
-        self.rect.x -= camera_pos[0]
-        self.rect.y -= camera_pos[1]
+    def update(self, dt, camera_change):
+        self.rect.x += camera_change[0]
+        self.rect.y += camera_change[1]
+        self.area.x += camera_change[0]
+        self.area.y += camera_change[1]
 
     def event(self, e):
         pass

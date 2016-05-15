@@ -18,13 +18,12 @@ class Looting:
             if o.type == 'quest_object':
                 self.names.append(o.text)
 
-    def render(self, screen, camera_pos):
+    def render(self, screen):
         if self.visibility:
             string = ', '.join(self.names)
             string = 'You took: ' + string
             text = Text(string, color=(150, 150, 150), size=24, pos=(20, 20))
             text.render(self.sur)
-            self.pos = (self.pos[0] - camera_pos[0], self.pos[1] - camera_pos[1])
             screen.blit(self.sur, self.pos)
         else:
             pass
