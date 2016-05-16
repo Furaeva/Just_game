@@ -53,9 +53,9 @@ class PyMain:
                     value, objct = hero.area_collision(self.render_list)
                     if value:
                         # FIXME
-                        if objct["name"] == "chest":
-                            self.looting = Looting(True)
-                            self.looting.adds(objct["argument"])
+                        if objct["class"] == "Chest" and objct["object"].state == 'enabled':
+                            self.looting = Looting(True, width=self.width)
+                            self.looting.adds(objct["object"].inventory_objs_list)
                             objct["object"].interaction(hero.inventory)
                             objct["argument"] = []
                             print("INVENTORY:", hero.inventory)
