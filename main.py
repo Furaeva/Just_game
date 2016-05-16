@@ -8,14 +8,14 @@ from Classes.Player import Player
 from Classes.StaticObject import StaticObject
 
 FPS = 30
-WIN_WIDTH = 700
-WIN_HEIGHT = 600
+WIN_WIDTH = 640
+WIN_HEIGHT = 480
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 BACKGROUND_COLOR = (0, 0, 0)
 
 pygame.init()
 
-f = open(os.path.join("Maps", "test_map.json"))
+f = open(os.path.join("Maps", "diploma_map.json"))
 json_map = json.load(f)
 f.close()
 f = open(os.path.join("Descriptions", "objects.json"))

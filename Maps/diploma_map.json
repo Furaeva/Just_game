@@ -1,0 +1,123 @@
+[
+    {
+        "start_player_pos": [
+            300,
+            400
+        ],
+        "type": "description"
+    },
+    {
+        "image": "back_tiles.png",
+        "type": "background"
+    },
+    {
+        "argument": null,
+        "index": 7,
+        "name": "flower1_pink",
+        "pos": [
+            506,
+            94
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 2,
+        "name": "flower1_pink",
+        "pos": [
+            60,
+            107
+        ],
+        "type": "object"
+    },
+    {
+        "argument": [["Healing Potion", 5], ["Scarf"]],
+        "index": 1,
+        "name": "chest_pink",
+        "pos": [
+            238,
+            113
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 8,
+        "name": "flower_pink",
+        "pos": [
+            512,
+            179
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 3,
+        "name": "flower_pink",
+        "pos": [
+            56,
+            180
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 4,
+        "name": "flower1_pink",
+        "pos": [
+            58,
+            248
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 9,
+        "name": "flower1_pink",
+        "pos": [
+            509,
+            248
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 5,
+        "name": "flower_pink",
+        "pos": [
+            55,
+            334
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 10,
+        "name": "flower_pink",
+        "pos": [
+            509,
+            339
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 6,
+        "name": "flower1_pink",
+        "pos": [
+            56,
+            400
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "index": 11,
+        "name": "flower1_pink",
+        "pos": [
+            510,
+            401
+        ],
+        "type": "object"
+    }
+]

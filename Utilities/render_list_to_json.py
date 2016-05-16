@@ -9,7 +9,8 @@ def render_list_to_json(render_list, back, start_pos):
     for obj_dic in render_list:
         if obj_dic["type"] != "cursor":
             obj = {"index": obj_dic["index"], "type": obj_dic["type"], "name": obj_dic["name"],
-                   "pos": (obj_dic["object"].rect.x, obj_dic["object"].rect.y), "argument": obj_dic["argument"]}
+                   "class": obj_dic["class"], "pos": (obj_dic["object"].rect.x, obj_dic["object"].rect.y),
+                   "argument": obj_dic["argument"]}
             future_map.append(obj)
 
             print("!!!!:", obj["pos"])

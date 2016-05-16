@@ -32,16 +32,17 @@ def map_loader(json_map, objects_descr):
             for obj in objects_descr[0]["objects"]:
                 if dic['name'] == obj['name']:
                     image = obj['image'][0]
+                    classname = obj['class']
                     if obj['type'] == 'touchable':
                         height = obj['height']
                     else:
                         height = False
 
-            if dic["name"] == "chest":
+            if classname == "Chest":
                 new_obj = Chest(dic["argument"], x, y, image, height=height)
             else:
                 new_obj = StaticObject(x, y, image, height=height)
-            obj_dict = {"object": new_obj, "argument": dic["argument"],
+            obj_dict = {"object": new_obj, "argument": dic["argument"], "class": classname,
                         "index": dic["index"], "type": dic["type"], "name": dic["name"]}
 
             obj_list.append(obj_dict)
