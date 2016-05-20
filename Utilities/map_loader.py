@@ -44,6 +44,7 @@ def map_loader(json_map, objects_descr):
                 new_obj = StaticObject(x, y, image, height=height)
             obj_dict = {"object": new_obj, "argument": dic["argument"], "class": classname,
                         "index": dic["index"], "type": dic["type"], "name": dic["name"]}
+            print("map_loader", obj_dict)
 
             obj_list.append(obj_dict)
 

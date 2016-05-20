@@ -11,7 +11,27 @@
         "type": "background"
     },
     {
-        "argument": [["Healing Potion", 5], ["Scarf"]],
+        "argument": null,
+        "class": "Chest",
+        "index": 5,
+        "name": "chest",
+        "pos": [
+            148,
+            172
+        ],
+        "type": "object"
+    },
+    {
+        "argument": [
+            [
+                "Healing Potion",
+                5
+            ],
+            [
+                "Scarf"
+            ]
+        ],
+        "class": "Chest",
         "index": 4,
         "name": "chest",
         "pos": [
@@ -22,6 +42,7 @@
     },
     {
         "argument": null,
+        "class": "NPC",
         "index": 1,
         "name": "NPC",
         "pos": [
@@ -32,6 +53,7 @@
     },
     {
         "argument": null,
+        "class": "Locker",
         "index": 3,
         "name": "front_locker",
         "pos": [
@@ -42,11 +64,23 @@
     },
     {
         "argument": null,
+        "class": "Locker",
         "index": 2,
         "name": "front_locker",
         "pos": [
             208,
             310
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "class": "Chest",
+        "index": 6,
+        "name": "chest_pink",
+        "pos": [
+            311,
+            390
         ],
         "type": "object"
     }

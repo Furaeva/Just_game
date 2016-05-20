@@ -3,7 +3,7 @@ import pygame
 from settings import IMAGE_PATH
 from Classes.PyMain import PyMain
 from Utilities.load_image import load_image
-from Classes.StaticObject import StaticObject
+from Classes.StaticObject import *
 
 
 class SuperPyMain(PyMain):
@@ -52,17 +52,21 @@ class DemoCursor:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.description["type"] != "untouchable":
-                    new_obj = StaticObject(self.rect.x, self.rect.y, self.description["image"][0],
-                                           height=self.description["height"])
-                    self.obj_list = {"object": new_obj, "argument": None,
-                                     "type": "object", "index": self.index,
-                                     "name": self.description["name"]}
+                    if self.description["class"] == "Chest":
+                        new_obj = Chest([], self.pos_rect.x, self.pos_rect.y, self.description["image"][0])
+                        self.obj_list = {"object": new_obj, "argument": [], "class": "Chest",
+                                         "type": "object", "index": self.index, "name": self.description["name"]}
+                    else:
+                        new_obj = StaticObject(self.rect.x, self.rect.y, self.description["image"][0],
+                                               height=self.description["height"])
+                        self.obj_list = {"object": new_obj, "argument": None, "class": self.description["class"],
+                                         "type": "object", "index": self.index,
+                                         "name": self.description["name"]}
                 else:
                     new_obj = StaticObject(self.pos_rect.x, self.pos_rect.y, self.description["image"][0])
-                    self.obj_list = {"object": new_obj, "argument": None,
+                    self.obj_list = {"object": new_obj, "argument": None, "class": self.description["class"],
                                      "type": "object", "index": self.index,
                                      "name": self.description["name"]}
-
                 self.render_list.append(self.obj_list)
                 self.description = False
 

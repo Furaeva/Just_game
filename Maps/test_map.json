@@ -1,25 +1,76 @@
 [
-  {
-    "type": "description",
-    "start_player_pos": [300, 400],
-    "inventory": []
-  },
-  {
-    "type": "background",
-    "image": "back1.png"
-  },
-  {
-    "index" : 1,
-    "type" : "object",
-    "name" : "front_locker",
-    "pos" : [300, 300],
-    "argument" : null
-  },
-  {
-    "index": 2,
-    "type": "object",
-    "name": "chest",
-    "pos": [400, 400],
-    "argument": [["Healing Potion", 2], ["Scarf"]]
-  }
+    {
+        "start_player_pos": [
+            300,
+            400
+        ],
+        "type": "description"
+    },
+    {
+        "image": "back1.png",
+        "type": "background"
+    },
+    {
+        "argument": [],
+        "class": "Chest",
+        "index": 5,
+        "name": "chest_pink",
+        "pos": [
+            316,
+            113
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "class": "Flower",
+        "index": 4,
+        "name": "flower1_pink",
+        "pos": [
+            118,
+            119
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "class": "Locker",
+        "index": 1,
+        "name": "front_locker",
+        "pos": [
+            300,
+            300
+        ],
+        "type": "object"
+    },
+    {
+        "argument": null,
+        "class": "Flower",
+        "index": 6,
+        "name": "flower1_pink",
+        "pos": [
+            127,
+            314
+        ],
+        "type": "object"
+    },
+    {
+        "argument": [
+            [
+                "Healing Potion",
+                2
+            ],
+            [
+                "Scarf"
+            ]
+        ],
+        "class": "Chest",
+        "index": 2,
+        "name": "chest",
+        "pos": [
+            400,
+            400
+        ],
+        "type": "object"
+    }
 ]
